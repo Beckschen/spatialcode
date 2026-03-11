@@ -10,7 +10,7 @@
 > Jieneng Chen\*, Wenxin Ma\*, Ruisheng Yuan\*, Yunzhi Zhang\*, Jiajun Wu†, Alan Yuille†
 > Johns Hopkins University & Stanford University
 >
-> [Paper](https://arxiv.org/pdf/2603.05591) | [Project Page](https://spatial-code.github.io) | [Demo](https://huggingface.co/spaces/spatial-code/demo)
+> [Paper](https://arxiv.org/pdf/2603.05591)
 
 **Spatial Code** — Transform visual scenes into structured, executable 3D representations for spatial reasoning.
 
