@@ -26,8 +26,8 @@
 Stay tuned!
 
 - [x] arXiv paper — released on **March 5** → [arXiv:2603.05591](https://arxiv.org/pdf/2603.05591)
-- [ ] Codebase — releasing by **March 17**
-- [ ] Reinforcement training details — releasing by **March 22**
+- [ ] Codebase — releasing by **March**
+- [ ] Reinforcement training details — releasing by **March**
 - [ ] Reproducible models — releasing by **March 31**
 
 ## 📖 Citation
