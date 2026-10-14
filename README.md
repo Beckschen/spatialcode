@@ -1,3 +1,7 @@
+
+
+
+
 <h2 align="center">Thinking with Spatial Code for Physical-World Video Reasoning</h2>
 
 <p align="center">
@@ -30,7 +34,7 @@
 
 ## 🎬 Demo Video
 
-[▶️ Watch the demo](https://github.com/Beckschen/spatialcode/blob/main/figures/demo.mp4)
+[https://github.com/Beckschen/spatialcode/blob/main/figures/demo_compressed.mp4](https://github.com/user-attachments/assets/2386b070-b4df-46be-aea5-518e41294f0f)
 
 ## 🐉 Abstract
 
