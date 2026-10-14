@@ -55,7 +55,7 @@ encourages perspective-aware, geometrically grounded inference.
 
 ## 📣 News
 
-- **[2026.10]** SpatialCode v1.1: Qwen3-8B with spatial code + scene captions. Welcome our new core contributors @qic999 and @Lucky-Wang-Chenlong
+- **[2026.10]** SpatialCode v1.1: Qwen3-8B with spatial code + scene captions. Welcome our new core contributors [@qic999](https://github.com/qic999) and [@Lucky-Wang-Chenlong](https://github.com/Lucky-Wang-Chenlong)
 - **[2026.09]** SpatialCode v1 release: code, SpatialCode model, and preprocessed
   training/evaluation data.
 - **[2026.03]** SpatialCode v1 arXiv paper released:
