@@ -30,7 +30,7 @@
 
 ## 🎬 Demo Video
 
-[https://github.com/Beckschen/spatialcode/tree/main/figures/demo.mp4](https://github.com/user-attachments/assets/1186faeb-cb49-44f7-85f5-3478c43c87d5)
+[▶️ Watch the demo](https://github.com/Beckschen/spatialcode/blob/main/figures/demo.mp4)
 
 ## 🐉 Abstract
 
