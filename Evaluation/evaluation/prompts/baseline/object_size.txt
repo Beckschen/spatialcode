@@ -1,0 +1,11 @@
+## Object Size Estimation Instructions
+   Use visual appearance and real-world context of surrounding objects to estimate the size of the object. If not appeared, estimate by common sense.
+
+    NOTE: the unit is **cm**
+
+## Output Format
+
+{
+  "Reasoning": "...",
+  "Answer": "<XXX>"
+}

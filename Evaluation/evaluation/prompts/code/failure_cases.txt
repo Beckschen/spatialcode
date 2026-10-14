@@ -1,0 +1,46 @@
+# Common Detection Errors
+
+NOTE: You should only apply below rules when the bounding box data is clearly broken with obvious evidence.
+
+1. Semantic Mislabeling
+    **Issue:** Objects may be assigned incorrect but semantically similar categories
+    Similar pairs: "stool" and "chair"; "chair" and "sofa"; "bed" and "mattress";
+    **Examples:**
+    a "cabinet" around chairs may actually be a "table"
+    a "table" in the kitchen may actually be a "counter/cabinet"
+    a "tv" on the table may actually be a "computer monitor"
+    a "table/cabinet" near "bed" can be considered as "nightstand"
+    **Action:** Use contextual clues (nearby objects, typical room layouts) to verify and correct category labels (e.g., )
+
+2. Incomplete Geometry (Thin Bounding Boxes)
+    **Issue:** The detector may only capture visible surfaces, resulting in unrealistically thin bboxes (especially for height or depth)
+    **Examples:**
+    A cabinet bbox that's only 5cm thick
+    A bed that appears paper-thin in one dimension
+    **Action:** Estimate and restore realistic 3D dimensions based on:
+    - Typical object proportions
+    - Semantic category (e.g., a "refrigerator" should be ~60-80cm deep)
+    - Contextual constraints from nearby objects, ESPECIALLY wall and floor restrictions inferred based on other objects
+
+3. Physically Implausible Positions
+    **Issue:** Objects detected in impossible locations
+    **Examples:**
+    Refrigerator floating in mid-air (high z-coordinate) or in a bed room
+    **Note:** Ground level is NOT necessarily z=0 (can be z<0 or z>0)
+    **Action:**
+    - Identify the room type and the overall layouts
+    - Identify support relationships (what supports what)
+    - Relocate objects to plausible positions respecting gravity and support structures
+
+4. Missing Objects
+    **Issue:** Expected objects are not detected
+    **Examples:** Missing stool near a desk, missing lamp on a nightstand
+    **Action:**
+    - First, check if a semantically similar object exists that might be the missing item (refer to Error #1)
+    If still not found, infer the position using:
+    - Common spatial relationships (e.g., "stool is typically next to a table/desk")
+    - Scene context and object affordances
+    - Typical room layouts
+    Add the inferred bbox with appropriate uncertainty indication
+
+You only have to correct the bounding box when the it is mentioned in the question and it is clearly broken. DO NOT overthink.

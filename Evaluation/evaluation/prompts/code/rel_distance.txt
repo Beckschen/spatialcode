@@ -1,0 +1,63 @@
+# Distance Comparison Instructions
+Step 1: Semantic Validation (CRITICAL)
+
+Before calculating, cross-reference the BBox label with the Scene Description.
+
+    Exclude Anomalies: If a candidate's position (e.g., "printer at [5.49, 1.04]") contradicts the description (e.g., "printer is near the window"), search for a more plausible candidate or note the contradiction.
+
+    Deduplication: Ensure one object isn't being counted as two different categories.
+
+Step 2: Distance Calculation (The "Boundary" Method)
+
+Instead of just center-to-center with compensation, consider the object's extent.
+
+    Extract: Center (xc​,yc​,zc​) and Sizes (l,w,h).
+
+    Calculate Bounds: For each axis, the range is [center−size/2,center+size/2].
+
+    Point-to-Box Distance (Simplified): If the target is at (xt​,yt​,zt​), the distance to the closest edge on the X-axis is: dx=max(0,∣xt​−xc​∣−l/2) (Repeat for dy and dz)
+
+    Final Distance: dist=dx2+dy2+dz2​ Note: This is more accurate than size compensation for large/long objects like sofas or windows.
+
+Step 3: Comparison & Ranking
+
+    List every candidate and its calculated edge-to-edge distance.
+
+    Rank them: Dist(Obj1​)<Dist(Obj2​)<Dist(Obj3​).
+
+    Selection: Choose the object with the absolute minimum distance.
+
+Step 3.5: Cross-Validation (ALWAYS Required)
+
+After completing the numerical ranking (or neighbor-list ranking), cross-validate using BOTH sources:
+
+    BBox evidence: The Boundary Method distance ranking computed in Steps 2–3.
+    Scene Description neighbor list evidence: The neighbors of each object in the Scene Description are ordered by distance (nearest first). Check where each candidate appears in the reference object's neighbor list, and where the reference object appears in each candidate's neighbor list.
+
+If both sources agree on the closest object → confirm that answer.
+If they disagree → explicitly state the conflict, then prefer the BBox-based result UNLESS the BBox for the reference object is missing or clearly mislabeled, in which case prefer the neighbor-list result.
+
+Fallback Rule (Reference Object BBox Missing)
+
+    If the reference object is NOT present in the BBox list (or is clearly mislabeled), do NOT guess its position from nearby coordinates. Instead:
+    1. Use the Scene Description neighbor lists as the primary source. Find which candidate appears earliest (nearest) in the reference object's neighbor list.
+    2. Cross-validate by checking each candidate's own neighbor list: if the reference object appears earlier for one candidate than another, that candidate is closer.
+    3. If BBoxes exist for the candidate objects, use them only to confirm spatial plausibility (i.e., their positions should be consistent with the neighbor-list ranking), not to compute absolute distances to a guessed reference position.
+
+Critical Rules
+
+    Large Object Bias: Be careful with window, sofa, etc. Their length means their "closest point" is often much closer than their "center." Always use the Boundary Method above.
+
+    Explicit Math: Show the dx,dy,dz calculations for the top 2 closest candidates to prove why one is nearer.
+
+    No First-Match Bias: You must calculate distances for at least one instance of every requested category before deciding.
+
+    No Semantic Override: Do NOT override a BBox-based numerical result with a qualitative phrase from the Scene Description (e.g., "sofa is near the fireplace" does not mean the sofa is the closest). Only use Scene Description neighbor ordering as a primary source when BBox data for the reference object is missing.
+
+---
+
+Output format:
+{
+  "Reasoning": "According to the bounding box data, ...",
+  "Answer": "[A/B/C/D]"
+}

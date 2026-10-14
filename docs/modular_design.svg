@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 560" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1d2e;stop-opacity:1" />
+    </linearGradient>
+    <filter id="ds">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" opacity="0.06"/>
+    </pattern>
+    <marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="560" rx="16" fill="url(#bgG)"/>
+  <rect width="1100" height="560" fill="url(#g)" rx="16"/>
+
+  <text x="550" y="40" text-anchor="middle" fill="#e2e8f0" font-size="18" font-weight="600" letter-spacing="0.5">Modular Design &#x2014; Plug &amp; Play Components</text>
+
+  <!-- ═══════ Column 1: Vision-to-Code ═══════ -->
+  <rect x="30" y="65" width="310" height="470" rx="14" fill="#3b82f6" fill-opacity="0.06" stroke="#3b82f6" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="30" y="65" width="310" height="44" rx="14" fill="#3b82f6" fill-opacity="0.12"/>
+  <rect x="30" y="95" width="310" height="14" fill="#3b82f6" fill-opacity="0.12"/>
+  <circle cx="60" cy="87" r="13" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="60" y="92" text-anchor="middle" fill="#60a5fa" font-size="13">&#x26A1;</text>
+  <text x="195" y="93" text-anchor="middle" fill="#93c5fd" font-size="14" font-weight="700">Vision-to-Code</text>
+
+  <text x="55" y="133" fill="#64748b" font-size="10" font-weight="600" letter-spacing="1">OBJECT SEGMENTATION</text>
+  <rect x="50" y="145" width="125" height="50" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1" filter="url(#ds)"/>
+  <text x="112" y="167" text-anchor="middle" fill="#93c5fd" font-size="13" font-weight="600">SAM-2</text>
+  <text x="112" y="184" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600">&#x25CF; Active</text>
+  <circle cx="192" cy="170" r="10" fill="#1e293b" stroke="#475569" stroke-width="0.8"/>
+  <text x="192" y="174" text-anchor="middle" fill="#94a3b8" font-size="10">&#x21C4;</text>
+  <rect x="210" y="145" width="115" height="50" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#ds)"/>
+  <text x="267" y="167" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="600">SAM</text>
+  <text x="267" y="184" text-anchor="middle" fill="#64748b" font-size="9">Supported</text>
+
+  <text x="55" y="222" fill="#64748b" font-size="10" font-weight="600" letter-spacing="1">DEPTH &amp; POINT CLOUD</text>
+  <rect x="50" y="234" width="145" height="50" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1" filter="url(#ds)"/>
+  <text x="122" y="256" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">Depth Any. 3</text>
+  <text x="122" y="273" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600">&#x25CF; Default</text>
+
+  <text x="55" y="312" fill="#64748b" font-size="10" font-weight="600" letter-spacing="1">SCENE DESCRIPTION</text>
+  <rect x="50" y="324" width="145" height="50" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1" filter="url(#ds)"/>
+  <text x="122" y="346" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">VLM Caption</text>
+  <text x="122" y="363" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600">&#x25CF; Active</text>
+
+  <text x="55" y="402" fill="#64748b" font-size="10" font-weight="600" letter-spacing="1">3D MESH</text>
+  <rect x="50" y="414" width="145" height="50" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" stroke-dasharray="4,3" filter="url(#ds)"/>
+  <text x="122" y="436" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="600">SAM-3D</text>
+  <text x="122" y="453" text-anchor="middle" fill="#f59e0b" font-size="9">&#x25D0; Planned</text>
+
+
+  <text x="55" y="488" fill="#64748b" font-size="10" font-weight="600" letter-spacing="1">SPATIAL CODE AGENT</text>
+  <rect x="50" y="498" width="275" height="28" rx="8" fill="#1e293b" stroke="#9d4e7c" stroke-width="1" stroke-dasharray="4,3" filter="url(#ds)"/>
+  <text x="145" y="517" text-anchor="middle" fill="#b07a9b" font-size="10" font-weight="600">Encode &#x2192; Critique &#x2192; Refine &#x2192; &#x21BB;</text>
+  <text x="280" y="517" text-anchor="middle" fill="#64748b" font-size="8">&#x2726; Planned</text>
+
+  <!-- ═══════ Column 2: Spatial Code Medium ═══════ -->
+  <rect x="395" y="65" width="310" height="470" rx="14" fill="#10b981" fill-opacity="0.06" stroke="#10b981" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="395" y="65" width="310" height="44" rx="14" fill="#10b981" fill-opacity="0.12"/>
+  <rect x="395" y="95" width="310" height="14" fill="#10b981" fill-opacity="0.12"/>
+  <circle cx="425" cy="87" r="13" fill="none" stroke="#34d399" stroke-width="1.5"/>
+  <text x="425" y="91" text-anchor="middle" fill="#34d399" font-size="11" font-weight="800">{ }</text>
+  <text x="560" y="93" text-anchor="middle" fill="#6ee7b7" font-size="14" font-weight="700">Spatial Code Medium</text>
+
+  <!-- SceneCode box -->
+  <rect x="413" y="120" width="275" height="402" rx="9" fill="#1e293b" stroke="#10b981" stroke-width="1" filter="url(#ds)"/>
+  <rect x="413" y="120" width="275" height="36" rx="9" fill="#10b981" fill-opacity="0.08"/>
+  <rect x="413" y="143" width="275" height="13" fill="#10b981" fill-opacity="0.08"/>
+  <text x="432" y="143" fill="#6ee7b7" font-size="13" font-weight="700" font-family="'Courier New', monospace">SceneCode</text>
+  <text x="540" y="143" fill="#475569" font-size="10">(per video / image)</text>
+
+  <line x1="425" y1="165" x2="676" y2="165" stroke="#334155" stroke-width="0.6"/>
+  <text x="432" y="182" fill="#64748b" font-size="9" font-weight="600" letter-spacing="1">ATTRIBUTES</text>
+  <text x="432" y="200" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">objects</text>
+  <text x="520" y="200" fill="#64748b" font-size="10">List[ObjectCode]</text>
+  <text x="432" y="218" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">frame_ids</text>
+  <text x="520" y="218" fill="#64748b" font-size="10">List[int]</text>
+  <text x="432" y="236" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">camera_pose</text>
+  <text x="530" y="236" fill="#64748b" font-size="10">Optional[Pose]</text>
+
+  <!-- ObjectCode section -->
+  <line x1="425" y1="250" x2="676" y2="250" stroke="#334155" stroke-width="0.6"/>
+  <text x="432" y="268" fill="#6ee7b7" font-size="12" font-weight="700" font-family="'Courier New', monospace">ObjectCode</text>
+  <text x="540" y="268" fill="#475569" font-size="10">(per object)</text>
+
+  <!-- Geometry sub-header -->
+  <text x="445" y="288" fill="#64748b" font-size="8" font-weight="600" letter-spacing="0.5">GEOMETRY</text>
+  <text x="445" y="306" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">label</text>
+  <text x="510" y="306" fill="#64748b" font-size="10">str</text>
+  <text x="560" y="306" fill="#334155" font-size="9"># "sofa", "table"</text>
+  <text x="445" y="324" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">position</text>
+  <text x="525" y="324" fill="#64748b" font-size="10">[x, y, z]</text>
+  <text x="445" y="342" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">size</text>
+  <text x="495" y="342" fill="#64748b" font-size="10">[sx, sy, sz]</text>
+  <text x="445" y="360" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">orientation</text>
+  <text x="545" y="360" fill="#64748b" font-size="10">[roll, pitch, yaw]</text>
+  <text x="445" y="378" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">bbox_3d</text>
+  <text x="515" y="378" fill="#64748b" font-size="10">[x,y,z,sx,sy,sz,r,p,y]</text>
+
+  <!-- Semantics sub-header (from VLM) -->
+  <line x1="440" y1="392" x2="676" y2="392" stroke="#334155" stroke-width="0.4" stroke-dasharray="3,3"/>
+  <text x="445" y="408" fill="#64748b" font-size="8" font-weight="600" letter-spacing="0.5">SEMANTICS</text>
+  <text x="503" y="408" fill="#475569" font-size="8">(from VLM)</text>
+  <text x="445" y="426" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">description</text>
+  <text x="545" y="426" fill="#64748b" font-size="10">str</text>
+  <text x="445" y="444" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">size_estimation</text>
+  <text x="570" y="444" fill="#64748b" font-size="10">int</text>
+  <text x="600" y="444" fill="#334155" font-size="9"># cm</text>
+  <text x="445" y="462" fill="#94a3b8" font-size="11" font-family="'Courier New', monospace">relationships</text>
+  <text x="560" y="462" fill="#64748b" font-size="10">str</text>
+
+  <!-- Methods -->
+  <line x1="425" y1="478" x2="676" y2="478" stroke="#334155" stroke-width="0.6"/>
+  <text x="432" y="496" fill="#64748b" font-size="9" font-weight="600" letter-spacing="1">METHODS</text>
+  <text x="445" y="512" fill="#94a3b8" font-size="10" font-family="'Courier New', monospace">to_prompt_str()</text>
+  <text x="570" y="512" fill="#475569" font-size="9">&#x2192; LLM-readable</text>
+
+  <!-- ═══════ Column 3: LLM Backend ═══════ -->
+  <rect x="760" y="65" width="310" height="470" rx="14" fill="#f59e0b" fill-opacity="0.06" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="760" y="65" width="310" height="44" rx="14" fill="#f59e0b" fill-opacity="0.12"/>
+  <rect x="760" y="95" width="310" height="14" fill="#f59e0b" fill-opacity="0.12"/>
+  <circle cx="790" cy="87" r="13" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="790" y="92" text-anchor="middle" fill="#fbbf24" font-size="13">&#x1F9E0;</text>
+  <text x="925" y="93" text-anchor="middle" fill="#fcd34d" font-size="14" font-weight="700">LLM Backend</text>
+
+  <rect x="778" y="125" width="275" height="55" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1" filter="url(#ds)"/>
+  <text x="798" y="150" fill="#fcd34d" font-size="13" font-weight="700">Qwen3</text>
+  <text x="798" y="167" fill="#64748b" font-size="10">Open-source &#xB7; HF / vLLM</text>
+  <rect x="998" y="140" width="45" height="18" rx="4" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="0.8"/>
+  <text x="1020" y="153" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="600">Default</text>
+
+  <rect x="778" y="195" width="275" height="55" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#ds)"/>
+  <text x="798" y="220" fill="#e2e8f0" font-size="13" font-weight="700">GPT Family</text>
+  <text x="798" y="237" fill="#64748b" font-size="10">OpenAI-compatible API</text>
+  <rect x="992" y="210" width="50" height="18" rx="4" fill="#334155"/>
+  <text x="1017" y="223" text-anchor="middle" fill="#94a3b8" font-size="8">API</text>
+
+  <rect x="778" y="265" width="275" height="55" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#ds)"/>
+  <text x="798" y="290" fill="#e2e8f0" font-size="13" font-weight="700">Gemini Family</text>
+  <text x="798" y="307" fill="#64748b" font-size="10">Google API / compatible gateways</text>
+  <rect x="992" y="280" width="50" height="18" rx="4" fill="#334155"/>
+  <text x="1017" y="293" text-anchor="middle" fill="#94a3b8" font-size="8">API</text>
+
+  <text x="790" y="348" fill="#64748b" font-size="9" font-weight="600" letter-spacing="1">INFERENCE BACKENDS</text>
+  <rect x="778" y="360" width="82" height="28" rx="5" fill="#1e293b" stroke="#475569" stroke-width="0.8"/>
+  <text x="819" y="378" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600">HF</text>
+  <rect x="870" y="360" width="82" height="28" rx="5" fill="#1e293b" stroke="#475569" stroke-width="0.8"/>
+  <text x="911" y="378" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600">vLLM</text>
+  <rect x="962" y="360" width="82" height="28" rx="5" fill="#1e293b" stroke="#475569" stroke-width="0.8"/>
+  <text x="1003" y="378" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="600">API</text>
+
+  <text x="790" y="418" fill="#64748b" font-size="9" font-weight="600" letter-spacing="1">REASONING</text>
+  <text x="798" y="438" fill="#94a3b8" font-size="10">Coordinate math &#xB7; dot products</text>
+  <rect x="778" y="450" width="275" height="40" rx="6" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+  <text x="790" y="467" fill="#fcd34d" font-size="9" font-weight="700" letter-spacing="0.5">RL POSTTRAIN</text>
+  <text x="868" y="467" fill="#fbbf24" font-size="10" font-weight="600">Spatial Rubric Reward</text>
+  <text x="790" y="481" fill="#94a3b8" font-size="9">GRPO &#xB7; multi-dim scoring &#xB7; format + spatial</text>
+
+  <!-- ═══════ Arrows ═══════ -->
+  <line x1="340" y1="310" x2="395" y2="310" stroke="#475569" stroke-width="1.5" marker-end="url(#ah)"/>
+  <text x="367" y="303" text-anchor="middle" fill="#475569" font-size="8">encode</text>
+  <line x1="705" y1="310" x2="760" y2="310" stroke="#475569" stroke-width="1.5" marker-end="url(#ah)"/>
+  <text x="732" y="303" text-anchor="middle" fill="#475569" font-size="8">reason</text>
+
+</svg>

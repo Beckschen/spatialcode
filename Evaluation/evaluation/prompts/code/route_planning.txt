@@ -1,0 +1,11 @@
+- You can leverage your common sense if an object is missing. 
+- Please be careful about the view changes.
+
+You are in a typical indoor room. You should first imagine the overall layout, and reasoning based on the layout.
+
+---
+Output format:
+{
+  "Reasoning": "According to ...",
+  "Answer": "<final answer>"
+}

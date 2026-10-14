@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="262" viewBox="0 0 1460 262" role="img" aria-label="Spatial Code to VQA result">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1117"/>
+      <stop offset="62%" stop-color="#0e161d"/>
+      <stop offset="100%" stop-color="#10293a"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#18232c"/>
+      <stop offset="100%" stop-color="#121a21"/>
+    </linearGradient>
+    <linearGradient id="answer" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#62c7ff"/>
+      <stop offset="100%" stop-color="#2f80ed"/>
+    </linearGradient>
+    <filter id="shadow" x="-18%" y="-28%" width="136%" height="156%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.36"/>
+    </filter>
+    <style>
+      .sans { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .muted { fill: #95a5b5; }
+      .soft { fill: #d4dde7; }
+      .ink { fill: #1b2632; }
+      .orange { fill: #ffb86b; }
+      .green { fill: #7ee787; }
+    </style>
+  </defs>
+
+  <rect width="1460" height="262" fill="url(#bg)"/>
+  <circle cx="1370" cy="254" r="150" fill="#143d56" opacity="0.42"/>
+  <circle cx="74" cy="-30" r="112" fill="#18344d" opacity="0.28"/>
+
+  <g filter="url(#shadow)">
+    <rect x="8" y="27" width="478" height="214" rx="22" fill="url(#panel)" stroke="#314557" stroke-width="2.4"/>
+    <text x="48" y="75" class="mono muted" font-size="21" font-weight="700">scene0251_00</text>
+
+    <text x="48" y="122" class="mono soft" font-size="22">chair_1 = </text>
+    <text x="180" y="122" class="mono orange" font-size="22" font-weight="700">Object</text>
+    <text x="262" y="122" class="mono soft" font-size="22">(</text>
+
+    <text x="48" y="160" class="mono soft" font-size="22">name=</text>
+    <text x="132" y="160" class="mono green" font-size="22" font-weight="700">"chair"</text>
+    <text x="230" y="160" class="mono soft" font-size="22">, pos=(...))</text>
+
+    <text x="48" y="199" class="mono soft" font-size="22">chair_2 = </text>
+    <text x="180" y="199" class="mono orange" font-size="22" font-weight="700">Object</text>
+    <text x="262" y="199" class="mono soft" font-size="22">(...)</text>
+  </g>
+
+  <path d="M535 133 H642" stroke="#62b6ff" stroke-width="8" stroke-linecap="round"/>
+  <path d="M612 104 L645 133 L612 162" fill="none" stroke="#62b6ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="590" y="194" text-anchor="middle" class="sans muted" font-size="17" font-weight="650">LLM Reasoner</text>
+
+  <g filter="url(#shadow)">
+    <rect x="704" y="27" width="682" height="214" rx="22" fill="#f7fbff"/>
+    <text x="756" y="85" class="sans ink" font-size="24" font-weight="800">Question</text>
+    <text x="756" y="132" class="sans ink" font-size="29">How many chair(s) are in this room?</text>
+
+    <rect x="756" y="168" width="205" height="52" rx="26" fill="url(#answer)"/>
+    <text x="802" y="202" class="sans" font-size="27" font-weight="850" fill="#ffffff">Answer: 2</text>
+
+    <text x="997" y="190" class="sans" font-size="19" fill="#5b6b7c">two chair objects are found</text>
+    <text x="997" y="216" class="sans" font-size="19" fill="#5b6b7c">in the spatial code</text>
+  </g>
+</svg>

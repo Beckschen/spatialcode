@@ -1,0 +1,406 @@
+# @package _global_
+
+scratch:
+  exp_name: Exps/SpatialEncoder
+  weight_paths: ${oc.env:BOX_WEIGHTS_PATH}
+  use_extrinsic: true 
+  resolution: 1024
+  train_batch_size: 1
+  num_workers: 16
+  val_epoch_freq: 20
+  num_frames: 8
+  max_num_objects: 12
+  base_lr: 1.0e-4
+  vision_lr: 1.0e-7
+  condition_lr: 1.0e-5
+  phases_per_epoch: 1
+  num_epochs: 100
+  sam2_path: ${scratch.weight_paths}/sam2.1_hiera_large.pt
+
+
+dataset:
+  data_storage_path: ${oc.env:BOX_DATA_PATH}  # PATH to folder containing paths of meta json files
+  data_meta_path: ${oc.env:BOX_DATA_PATH}/pickle
+
+# Video transforms
+vos:
+  val_transforms:
+    _target_: training.dataset.transforms.ComposeAPI
+    transforms:
+      - _target_: training.dataset.transforms.ToTensor
+      - _target_: training.dataset.transforms.NormalizeTensor
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+trainer:
+  _target_: training.trainer.Trainer
+  mode: val
+  max_epochs: ${times:${scratch.num_epochs},${scratch.phases_per_epoch}}
+  accelerator: cuda
+  seed_value: 123
+  val_epoch_freq: ${scratch.val_epoch_freq}
+
+  model:
+    _target_: training.model.SAM2Train
+    spatial_encoder:
+      _target_: modeling.backbones.spatial.spatial_encoder.SpatialEncoder
+      spatial_name: depthanythingv3
+      is_pretrained: True
+      is_encoder_frozen: True
+      is_head_frozen: False
+    image_encoder:
+      _target_: modeling.backbones.image_encoder.ImageEncoder
+      scalp: 1
+      trunk:
+        _target_: modeling.backbones.hieradet.Hiera
+        embed_dim: 144
+        num_heads: 2
+        stages: [2, 6, 36, 4]
+        global_att_blocks: [23, 33, 43]
+        window_pos_embed_bkg_spatial_size: [7, 7]
+        window_spec: [8, 4, 16, 8]
+        is_frozen: True
+      interactive_2d_3d:
+        _target_: modeling.backbones.spatial.interactive.InteractiveLayer
+        embedding_dim: 512
+        num_heads: 8
+        dropout: 0.1
+        name_3d: ${trainer.model.spatial_encoder.spatial_name}
+        backbone_channel_list: ${trainer.model.image_encoder.neck.backbone_channel_list}
+      neck:
+        _target_: modeling.backbones.image_encoder.FpnNeck
+        position_encoding:
+          _target_: modeling.position_encoding.PositionEmbeddingSine
+          num_pos_feats: 256
+          normalize: true
+          scale: null
+          temperature: 10000
+        d_model: 256
+        backbone_channel_list: [1152, 576, 288, 144]
+        fpn_top_down_levels: [2, 3]  # output level 0 and 1 directly use the backbone features
+        fpn_interp_model: nearest
+        is_frozen: True
+
+    memory_attention:
+      _target_: modeling.memory_attention.MemoryAttention
+      d_model: 256
+      pos_enc_at_input: true
+      is_frozen: True
+      layer:
+        _target_: modeling.memory_attention.MemoryAttentionLayer
+        activation: relu
+        dim_feedforward: 2048
+        dropout: 0.1
+        pos_enc_at_attn: false
+        self_attention:
+          _target_: modeling.sam.transformer.RoPEAttention
+          rope_theta: 10000.0
+          feat_sizes: [64, 64]
+          embedding_dim: 256
+          num_heads: 1
+          downsample_rate: 1
+          dropout: 0.1
+        d_model: 256
+        pos_enc_at_cross_attn_keys: true
+        pos_enc_at_cross_attn_queries: false
+        cross_attention:
+          _target_: modeling.sam.transformer.RoPEAttention
+          rope_theta: 10000.0
+          feat_sizes: [64, 64]
+          rope_k_repeat: True
+          embedding_dim: 256
+          num_heads: 1
+          downsample_rate: 1
+          dropout: 0.1
+          kv_in_dim: 64
+      num_layers: 4
+
+    memory_encoder:
+      _target_: modeling.memory_encoder.MemoryEncoder
+      out_dim: 64
+      is_frozen: True
+      position_encoding:
+        _target_: modeling.position_encoding.PositionEmbeddingSine
+        num_pos_feats: 64
+        normalize: true
+        scale: null
+        temperature: 10000
+      mask_downsampler:
+        _target_: modeling.memory_encoder.MaskDownSampler
+        kernel_size: 3
+        stride: 2
+        padding: 1
+      fuser:
+        _target_: modeling.memory_encoder.Fuser
+        layer:
+          _target_: modeling.memory_encoder.CXBlock
+          dim: 256
+          kernel_size: 7
+          padding: 3
+          layer_scale_init_value: 1e-6
+          use_dwconv: True  # depth-wise convs
+        num_layers: 2
+
+    num_maskmem: 7
+    image_size: ${scratch.resolution}
+    # apply scaled sigmoid on mask logits for memory encoder, and directly feed input mask as output mask
+    sigmoid_scale_for_mem_enc: 20.0
+    sigmoid_bias_for_mem_enc: -10.0
+    use_mask_input_as_output_without_sam: true
+    # Memory
+    directly_add_no_mem_embed: true
+    no_obj_embed_spatial: true
+    # use high-resolution feature map in the SAM mask decoder
+    use_high_res_features_in_sam: true
+    # output 3 masks on the first click on initial conditioning frames
+    multimask_output_in_sam: true
+    # SAM heads
+    iou_prediction_use_sigmoid: True
+    intrinsic_fusion_ratio: 0.5
+    # cross-attend to object pointers from other frames (based on SAM output tokens) in the encoder
+    use_obj_ptrs_in_encoder: true
+    add_tpos_enc_to_obj_ptrs: true
+    proj_tpos_enc_in_obj_ptrs: true
+    use_signed_tpos_enc_to_obj_ptrs: true
+    only_obj_ptrs_in_the_past_for_eval: true
+    # object occlusion prediction
+    pred_obj_scores: true
+    pred_obj_scores_mlp: true
+    fixed_no_obj_ptr: true
+    # multimask tracking settings
+    multimask_output_for_tracking: true
+    use_multimask_token_for_obj_ptr: true
+    multimask_min_pt_num: 0
+    multimask_max_pt_num: 1
+    use_mlp_for_obj_ptr_proj: true
+
+
+    ####### Training specific params #######
+    # box/point input and corrections
+    num_points_to_track: 500  # number of points to track in 3D tracking head
+    prob_to_use_pt_input_for_train: 0.5 # else uses bbox
+    prob_to_use_pt_input_for_eval: 1.0
+    prob_to_use_box_center_input_for_train: 0.5  # else sample points around bbox center within bbox
+    prob_to_use_box_center_input_for_eval: 1.0
+    num_frames_to_correct_for_train: 2  # iteratively sample on random 1~2 frames (always include the first frame)
+    num_frames_to_correct_for_eval: 1  # only iteratively sample on first frame
+    rand_frames_to_correct_for_train: True  # random #init-cond-frame ~ 2
+    add_all_frames_to_correct_as_cond: True  # when a frame receives a correction click, it becomes a conditioning frame (even if it's not initially a conditioning frame)
+    # maximum 2 initial conditioning frames
+    num_init_cond_frames_for_train: 2
+    rand_init_cond_frames_for_train: True  # random 1~2
+    num_correction_pt_per_frame: 3
+    use_act_ckpt_iterative_pt_sampling: false
+    
+    num_init_cond_frames_for_eval: 1  # only mask on the first frame
+    forward_backbone_per_frame_for_eval: True
+    
+  data:
+    val:
+      _target_: training.dataset.base_dataset.ObjectDetectionDataset
+      dataset_name: "CA-1M"
+      default_scale: 1000.0 #scale to meters
+      batch_size: 1
+      predict_metric: True
+      norm_scale: 2.5
+      meta_dir: ${oc.env:BOX_DATA_VAL_PATH}
+      base_dir: ${dataset.data_storage_path}/CA-1M
+      use_extrinsic: ${scratch.use_extrinsic}
+      spatial_resolution: 504
+      resolution: ${scratch.resolution}
+      video_split_per_frame: 8 # split each video into segments of 20 frames
+      frame_num_range: [8, 8] # TODO
+      frame_sample_gap_range: [8, 8]
+      training: false
+      val_transforms: ${vos.val_transforms}
+      spatial_type: ${trainer.model.spatial_encoder.spatial_name}
+      max_num_objects: 10
+      shuffle: False
+      num_workers: ${scratch.num_workers}
+      pin_memory: True
+      collate_fn:
+        _target_: training.utils.data_utils.collate_fn
+        _partial_: true
+        dict_key: all
+
+  optim:
+    amp:
+      enabled: True
+      amp_dtype: bfloat16
+
+    optimizer:
+      _target_: torch.optim.AdamW
+
+    gradient_clip:
+      _target_: training.optimizer.GradientClipper
+      max_norm: 0.1
+      norm_type: 2
+
+    # param_group_modifiers:
+    #   - _target_: training.optimizer.layer_decay_param_modifier
+    #     _partial_: True
+    #     layer_decay_value: 0.9
+    #     apply_to: 'image_encoder.neck'
+    #     overrides:
+    #       - pattern: '*pos_embed*'
+    #         value: 1.0
+
+    options:
+      lr:
+        - scheduler:
+            _target_: fvcore.common.param_scheduler.CosineParamScheduler
+            start_value: ${scratch.base_lr}
+            end_value: ${divide:${scratch.base_lr},100}
+        - scheduler:
+            _target_: fvcore.common.param_scheduler.CosineParamScheduler
+            start_value: ${scratch.vision_lr}
+            end_value: ${divide:${scratch.vision_lr},100}
+          param_names:
+            - 'image_encoder.*'
+            - 'spatial_encoder.*'
+        - scheduler:
+            _target_: fvcore.common.param_scheduler.CosineParamScheduler
+            start_value: ${scratch.condition_lr}
+            end_value: ${divide:${scratch.condition_lr},100}
+          param_names:
+            - 'sam_mask_decoder.*cond.*'
+      weight_decay:
+        - scheduler:
+            _target_: fvcore.common.param_scheduler.ConstantParamScheduler
+            value: 0.1
+        - scheduler:
+            _target_: fvcore.common.param_scheduler.ConstantParamScheduler
+            value: 0.0
+          param_names:
+            - '*bias*'
+          module_cls_names: ['torch.nn.LayerNorm']
+
+  loss:
+    all:
+      _target_: training.loss.MultiStepLossFns
+      weight_dict:
+        loss_2d_bbox_iou: 10
+        loss_2d_bbox_l1: 5
+        loss_3d_bbox_center_in_2d_l1: 50
+        loss_3d_bbox_depth: 10
+        loss_3d_bbox_dim: 10
+        loss_3d_bbox_alpha: 10
+        loss_3d_bbox_quat: 10
+        loss_3d_chamfer: 10
+        loss_3d_agg_center_in_first_frame_l1: 10
+        loss_3d_agg_dim_l1: 10
+        loss_3d_agg_quat: 10
+        loss_3d_agg_chamfer: 10
+        loss_3d_agg_consistency: 1 #orientation consistency loss
+        loss_3d_bbox_ious: 1
+        loss_camera_pose: 1
+        loss_depth_map: 1
+        loss_depth_gradient: 1
+        loss_class: 10
+        loss_3d_bbox_l1: 10
+        # loss_depth_map_aux: 0.1
+        # loss_camera_pose_aux: 0.1
+      log_iou: true
+      log_depth_error: true
+      log_yaw_error: true
+      log_pose: true
+      resolution: ${scratch.resolution}
+      depth_sil_coefficient: 10
+      supervise_all_iou: true
+      iou_use_l1_loss: true
+      pred_obj_scores: true
+      focal_gamma_obj_score: 0.0
+      focal_alpha_obj_score: -1.0
+
+  meters:
+    train:
+      all:
+        miou: 
+          _target_: training.metric.MeanIoU
+    val:
+      all:
+        miou: 
+          _target_: training.metric.MeanIoU
+        translation_error: 
+          _target_: training.metric.TranslationError
+          scale: ${trainer.data.val.norm_scale}
+        # mf1: 
+        #   _target_: training.metric.PreRecF1Score
+        #   threshold: [0.25,0.5]
+        # mAP: 
+        #   _target_: training.metric.AveragePrecision
+        #   threshold: [0.05,0.5]
+        depth_error: 
+          _target_: training.metric.DepthError
+          scale: ${trainer.data.val.norm_scale}
+        yaw_error: 
+          _target_: training.metric.YawError
+          unit: rad
+        scale_error: 
+          _target_: training.metric.ScaleError
+
+  distributed:
+    backend: nccl
+    find_unused_parameters: True
+
+  logging:
+    # tensorboard_writer:
+    #   _target_: training.utils.logger.make_tensorboard_logger
+    #   log_dir:  ${launcher.experiment_log_dir}/tensorboard
+    #   flush_secs: 120
+    #   should_log: True
+    log_dir: ${launcher.experiment_log_dir}/logs
+    log_freq: 1
+    log_scalar_frequency: 10
+    wandb_writter:
+      _target_: training.utils.logger.make_wandb_logger
+      project: BoxFromMotion
+      name: ${scratch.exp_name} # use the folder name as the run name
+      config:
+        batch_size: ${scratch.train_batch_size}
+        resolution: ${scratch.resolution}
+        num_frames: ${scratch.num_frames}
+        max_num_objects: ${scratch.max_num_objects}
+        base_lr: ${scratch.base_lr}
+        vision_lr: ${scratch.vision_lr}
+        condition_lr: ${scratch.condition_lr}
+      should_log: True
+
+  # initialize from a SAM 2 checkpoint
+  checkpoint:
+    save_dir: ${launcher.experiment_log_dir}/checkpoints
+    save_freq: 0 # 0 only last checkpoint is saved.
+    initialize_after_preemption: true
+    skip_saving_parameters:
+      - 'memory_attention.*'
+      - 'memory_encoder.*'
+      - 'sam_prompt_encoder.*'
+    model_weight_initializer:
+      _partial_: True
+      _target_: training.utils.checkpoint_utils.load_state_dict_into_model
+      ignore_unexpected_keys: null
+      ignore_missing_keys: null
+      strict: False
+      state_dict:
+        _target_: training.utils.checkpoint_utils.load_checkpoint_and_apply_kernels
+        checkpoint_path: ${scratch.sam2_path}
+        ckpt_state_dict_keys: ['model']
+
+
+launcher:
+  num_nodes: 1
+  gpus_per_node: 8
+  experiment_log_dir: ${scratch.weight_paths}/${scratch.exp_name} # Path to log directory, defaults to ./sam2_logs/${config_name}
+
+# SLURM args if running on a cluster
+submitit:
+  partition: null
+  account: null
+  qos: null
+  cpus_per_task: 10
+  mem_gb: 640
+  use_cluster: false
+  timeout_hour: 72
+  name: null
+  port_range: [10000, 65000]
+  exclude_nodes: []

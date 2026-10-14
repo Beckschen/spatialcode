@@ -1,0 +1,46 @@
+## **Minimum Distance Calculation Task**
+
+Goal: Calculate the minimum edge-to-edge distance (in meters) between two objects using their 3D bounding boxes. **You MUST use bounding box arithmetic — do not rely on scene description estimates.**
+
+---
+
+### Step 1 — Select the correct bounding boxes
+
+Use the scene description (`description` and `longest_side_size_estimation`) to identify each object, then find its bounding box:
+
+1. Locate the object in the scene description and note its `longest_side_size_estimation` (cm).
+2. Among bbox candidates with the matching label, keep those whose largest dimension (max of sx, sy, sz) is within 2× of `expected_size = size_cm / 100`.
+3. If multiple candidates remain, prefer the one whose position matches the scene description's spatial context.
+
+---
+
+### Step 2 — Compute the distance (mandatory)
+
+```
+# Bbox format: [cx, cy, cz, sx, sy, sz, roll, pitch, yaw]
+A_min = (cx_A - sx_A/2, cy_A - sy_A/2, cz_A - sz_A/2)
+A_max = (cx_A + sx_A/2, cy_A + sy_A/2, cz_A + sz_A/2)
+B_min = (cx_B - sx_B/2, cy_B - sy_B/2, cz_B - sz_B/2)
+B_max = (cx_B + sx_B/2, cy_B + sy_B/2, cz_B + sz_B/2)
+
+dx = max(0, max(A_min_x - B_max_x, B_min_x - A_max_x))
+dy = max(0, max(A_min_y - B_max_y, B_min_y - A_max_y))
+dz = max(0, max(A_min_z - B_max_z, B_min_z - A_max_z))
+
+min_dist = sqrt(dx² + dy² + dz²)
+```
+
+If multiple valid bbox pairs exist, compute all and report the minimum.
+
+**If the result is 0 (bounding boxes overlap):** this is a 3D reconstruction artifact. Output a small positive estimate (0.05–0.20m) based on the objects' sizes instead.
+
+**NEVER output 0. The answer must always be a strictly positive number.**
+
+---
+
+## **Output Template**
+
+{
+  "Reasoning": "Step 1: bbox for [A] — expected ~Xcm, largest dim = Ym ✓/✗. bbox for [B] — expected ~Xcm, largest dim = Ym ✓/✗. Step 2: dx=?, dy=?, dz=?, min_dist = Z.ZZm.",
+  "Answer": "Z.ZZ"
+}

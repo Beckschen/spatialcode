@@ -1,0 +1,6 @@
+---
+## Output format:
+{
+  "Reasoning": "According to the video frames, [observation], suggesting [direction].",
+  "Answer": <choice>
+}

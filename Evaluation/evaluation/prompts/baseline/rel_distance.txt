@@ -1,0 +1,23 @@
+## Distance Comparison Instructions
+
+From video:
+  Step1: Observe spatial layout and identify all relevant objects
+  Step2: List all candidates and estimate approximate distance of each candidate
+    If there are multiple objects belonging to the same category, list each one.
+    ✅ Provide single numerical value for each candidate (e.g., "2.5m") ❌ Do NOT give ranges (e.g., "2-3m")
+    ✅ Consider all candidate types and all instance ❌ Do NOT stop after the first match
+  Step3: Select the closest object visually
+
+---
+
+## Critical Rules
+  1. NEVER stop at the first match. There might be multiple objects of the same category.
+  2. DOUBLE-CHECK your reasoning is supported by evidence.
+
+---
+
+Output format:
+{
+  "Reasoning": "According to the video, ....",
+  "Answer": "[A/B/C/D]"
+}

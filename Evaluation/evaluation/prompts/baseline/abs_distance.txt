@@ -1,0 +1,26 @@
+## **Distance Estimation Task**
+
+Goal: Calculate the distance between two specific objects from the closest points (e.g., "table and dishwasher").
+---
+
+Step 1: Identify the two objects
+  Extract from question:
+    - Object A: (e.g., "table")
+    - Object B: (e.g., "dishwasher")
+  NEVER stop at the first match. There might be multiple objects of the same category.
+
+Step 2: Video observation
+  ✅ Single numerical value (e.g., "2.5m") ❌ No ranges (e.g., "2-3m")
+  ```
+  Video: [Object A] is at [location]. [Object B] is at [location].
+  Visual relationship: [description]
+  Estimated distance: ~X.Xm
+  ```
+
+---
+
+## **Output Template**
+{
+  "Reasoning": "According to the video, ....",
+  "Answer": "X.XX"
+}

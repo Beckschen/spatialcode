@@ -1,0 +1,1 @@
+from .model import DepthAnything3  # noqa: F401

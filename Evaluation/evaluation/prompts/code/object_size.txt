@@ -1,0 +1,14 @@
+## Object Size Estimation Instructions
+    **Bounding Box Estimation**: Use `[x_size, y_size, z_size]` in bounding box data as full-size estimation (not half-size). 
+    You can use your common sense to correct clear mistakes in bounding boxes. 
+    
+## Note
+  - The unit is **CM** for answering the question, while bbox is given in **M**.
+  - YOU ARE ALLOWED TO GUESS. If box is missing, answer by common sense.
+
+## Output Format
+Please follow the format strictly:
+{
+  "Reasoning": "...",
+  "Answer": "<XXX>"
+}

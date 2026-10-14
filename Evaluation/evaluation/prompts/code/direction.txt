@@ -1,0 +1,97 @@
+# Direction Estimation Instructions
+
+> **Key principle:** Direction is determined purely by bounding box coordinates. The scene description contains NO directional information — use it only to identify which bounding box belongs to each object.
+
+---
+
+## Step 1 — Select the correct bounding boxes
+
+The scene description provides `description` and `longest_side_size_estimation` to help you pick the right bbox when multiple candidates share the same label (e.g., two doors, three chairs):
+
+- Match by size: keep candidates whose largest bbox dimension (max of sx, sy, sz) is within 2× of `expected_size = size_cm / 100`.
+- Match by context: if multiple remain, use the description's spatial context (e.g., "next to the sink") to disambiguate.
+- For large objects (sofas, tables): use the boundary point closest to the other object as the effective position, not the center.
+
+Once the correct bbox is selected, **all subsequent reasoning uses only the bbox coordinates.**
+
+---
+
+## Step 2 — Compute direction from bbox coordinates
+
+**Extract 2D positions (ignore z):**
+```
+observer = [obs_x, obs_y]   # standing point (the "I am standing by X" object)
+target   = [tar_x, tar_y]   # facing direction (the "facing Y" object)
+query    = [qry_x, qry_y]   # object to locate
+```
+
+**Compute vectors:**
+```
+forward  = [tar_x - obs_x, tar_y - obs_y]
+relative = [qry_x - obs_x, qry_y - obs_y]
+```
+
+**Cross product (LEFT vs RIGHT):**
+```
+cross_z = forward_x * relative_y - forward_y * relative_x
+  cross_z > 0 → query is to the LEFT
+  cross_z < 0 → query is to the RIGHT
+```
+🚫 NEVER use raw coordinate comparison (e.g., x1 < x2) — it breaks when the observer faces diagonally.
+
+**Dot product (FRONT vs BACK):**
+```
+dot       = forward_x * relative_x + forward_y * relative_y
+cos_theta = dot / (|forward| * |relative|)
+  cos_theta ≥ -0.707 (angle < 135°) → FRONT half
+  cos_theta <  -0.707 (angle ≥ 135°) → BACK
+```
+
+---
+
+## Step 3 — Map to the question's answer options
+
+The question type determines which dimensions matter:
+
+### Easy — 2 options: left / right
+Only `cross_z` matters. Ignore dot entirely.
+```
+cross_z > 0 → left
+cross_z < 0 → right
+```
+
+### Medium — 3 options: left / right / back
+Check back first; otherwise use `cross_z`:
+```
+if cos_theta < -0.707:  → back
+elif cross_z > 0:       → left
+else:                   → right
+```
+Note: "front" is not an option in medium. Any object that is not in the back half is classified as left or right.
+
+### Hard — 4 options: front-left / front-right / back-left / back-right
+Use both `cross_z` and `cos_theta`:
+
+| cross_z | cos_theta   | Quadrant    |
+|---------|-------------|-------------|
+| > 0     | ≥ -0.707    | front-left  |
+| < 0     | ≥ -0.707    | front-right |
+| > 0     | < -0.707    | back-left   |
+| < 0     | < -0.707    | back-right  |
+
+---
+
+## Step 4 — Error handling
+
+- **Multiple candidates with same label:** state in Reasoning why you chose one bbox over another.
+- **Object not found in bbox list:** return `"Answer": "N/A"`.
+- **Always show full arithmetic** for `cross_z`, `dot`, and `cos_theta` in Reasoning.
+
+---
+
+## Output Format (STRICT)
+
+{
+  "Reasoning": "1. Bbox selection: [why this bbox]. 2. Positions: observer=[x,y], target=[x,y], query=[x,y]. 3. Vectors: forward=[..], relative=[..]. 4. Math: cross_z=.., dot=.., cos_theta=.. 5. Question type: [easy/medium/hard] → applying [rule]. 6. Conclusion: [direction]",
+  "Answer": "A/B/C/D"
+}

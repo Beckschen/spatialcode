@@ -1,0 +1,5 @@
+File,Dataset,Obj. Count,Abs. Dist.,Obj. Size,Room Size,Rel. Dist.,Rel. Dir.,Route Plan,Appr. Order,Overall,Obj. Count Empty,Abs. Dist. Empty,Obj. Size Empty,Room Size Empty,Rel. Dist. Empty,Rel. Dir. Empty,Route Plan Empty,Appr. Order Empty,Overall Empty,Total
+bbox_wo_caption_abs_dist_6_gpus_qwen3_8b_grpo_abs_dist,all,0.00,22.17,0.00,0.00,0.00,0.00,0.00,0.00,22.17,0,7,0,0,0,0,0,0,7,834
+bbox_wo_caption_abs_dist_6_gpus_qwen3_8b_grpo_abs_dist,arkitscenes,0.00,28.19,0.00,0.00,0.00,0.00,0.00,0.00,28.19,0,1,0,0,0,0,0,0,1,277
+bbox_wo_caption_abs_dist_6_gpus_qwen3_8b_grpo_abs_dist,scannet,0.00,28.53,0.00,0.00,0.00,0.00,0.00,0.00,28.53,0,3,0,0,0,0,0,0,3,347
+bbox_wo_caption_abs_dist_6_gpus_qwen3_8b_grpo_abs_dist,scannetpp,0.00,3.71,0.00,0.00,0.00,0.00,0.00,0.00,3.71,0,3,0,0,0,0,0,0,3,210

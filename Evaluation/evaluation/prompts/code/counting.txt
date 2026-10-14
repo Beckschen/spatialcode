@@ -1,0 +1,30 @@
+## Object Counting Instructions
+
+You have THREE data sources for counting. Use them in this priority order:
+
+### Priority 1: Scene Description "Object Counts"
+The scene description includes an **Object Counts** section with per-category totals (e.g., `"chair": 12`). This was obtained from careful visual observation of the full scene.
+- **This is your PRIMARY source for counting.** Use this value directly if the target category is listed.
+- The Object Details list below it only contains REPRESENTATIVE instances (capped at ~30 total). Do NOT count from the Object Details list — it will always undercount.
+
+### Priority 2: Bounding Box Data
+If the target category is NOT in the Object Counts section, count unique bounding boxes matching the target category.
+- **Perform explicit counting** by listing each bbox (e.g., 'chair at [x1,...], chair at [x2,...] → total: 2').
+- Also check for semantically similar labels (e.g., "stool" ↔ "chair").
+
+### Priority 3: Cross-validation
+- If both sources are available, prefer the Object Counts value.
+- If the Object Counts value is 0 but bounding boxes show instances, use the bbox count (the visual observation may have missed them).
+- If neither source has the target category, answer 0.
+
+**CRITICAL RULES:**
+- NEVER count from the Object Details list — it only has representative samples, not all instances.
+- The Object Counts section has the TRUE total. Trust it.
+- DOUBLE-CHECK that your final answer matches the Object Counts value for the target category.
+
+## Output format:
+
+{
+  "Reasoning": "From the Object Counts section, [category] has a count of X. Cross-checking with bounding box data: [found Y bboxes]. Final answer: X.",
+  "Answer": "<X>"
+}

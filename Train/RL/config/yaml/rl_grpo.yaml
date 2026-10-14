@@ -1,0 +1,46 @@
+# Thinking with Spatial Code — GRPO RL Training Config
+# Reproduces Table 6 from the paper
+
+model:
+  base_model: "Qwen/Qwen3-4B-Instruct-2507"
+  precision: bf16
+
+grpo:
+  group_size: 16          # G: samples per prompt
+  kl_coeff: 0.01          # β
+  temperature: 0.7        # τ
+  reward_clip: [-0.5, 1.8]
+
+optimization:
+  learning_rate: 1.0e-6
+  batch_size_per_device: 4
+  gradient_accumulation_steps: 2
+  num_epochs: 1
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+
+sequence:
+  max_prompt_length: 2048
+  max_completion_length: 1024
+
+data:
+  train_file: "data/spatial_dataset_all/train/data.json"
+  task_types:
+    - object_rel_direction
+    # - pairwise_configuration
+    # - object_abs_distance
+    # - object_rel_distance
+    # - object_counting
+    # - object_size_estimation
+    # - room_size_estimation
+    # - obj_appearance_order
+    # - route_planning
+
+infrastructure:
+  distributed_strategy: "deepspeed_zero2"
+  gradient_checkpointing: true
+  seed: 42
+
+logging:
+  log_every_n_steps: 10
+  save_every_n_steps: 500

@@ -1,0 +1,10 @@
+## Object Counting Instructions
+    - Count the total number of specified objects in the scene
+    - Video-based counting: Carefully observe all frames to identify and count visible instances. Consider objects may appear in different viewpoints across frames—avoid double counting the same object seen from different angles
+
+## Output format:
+
+{
+  "Reasoning": "...",
+  "Answer": "<X>"
+}
