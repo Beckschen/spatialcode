@@ -9,7 +9,6 @@
   <a href="https://huggingface.co/qicq1c/SpatialCode"><img src="https://img.shields.io/badge/HuggingFace-Model-yellow" alt="Model"></a>
   <a href="https://huggingface.co/datasets/qicq1c/spatialencoder_full"><img src="https://img.shields.io/badge/HuggingFace-Training_Data-blue" alt="Training Data"></a>
   <a href="https://huggingface.co/datasets/qicq1c/VSIBench"><img src="https://img.shields.io/badge/HuggingFace-VSIBench-blue" alt="VSIBench"></a>
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=qicq1c.SpatialCode&left_color=green&right_color=red" alt="visitors">
 </p>
 
 ## 🎬 Demo Video
