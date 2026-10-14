@@ -258,7 +258,7 @@ For details about each component, please refer to the corresponding README:
 - Spatial Encoder training details: [Spatial Encoder Training](Train/SpatialEncoder/README.md)
 - RL training details: [RL Training](Train/RL/README.md)
 
-## 📌 Citation
+## 📌 citation
 
 If you find this project helpful, please cite:
 
@@ -271,7 +271,7 @@ If you find this project helpful, please cite:
 }
 ```
 
-## 🙏 Acknowledgements
+## acknowledgements
 
 This repository builds on and thanks the authors of
 [SAM 2](https://github.com/facebookresearch/sam2),
