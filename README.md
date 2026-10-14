@@ -5,26 +5,6 @@
 <h2 align="center">Thinking with Spatial Code for Physical-World Video Reasoning</h2>
 
 <p align="center">
-  <a href="https://www.jienengchen.com/">Jieneng Chen</a><sup>1,2</sup>*,
-  <a href="https://qic999.github.io/">Qi Chen</a><sup>1</sup>*,
-  <a href="https://scholar.google.com/citations?hl=en&user=okLiptEAAAAJ">Ruisheng Yuan</a><sup>1</sup>*,
-  <a href="https://mwxinnn.github.io/about/">Wenxin Ma</a><sup>1</sup>*,
-  <a href="https://openreview.net/profile?id=~Chenlong_Wang3">Chenlong Wang</a><sup>1</sup>*,
-  <a href="https://cs.stanford.edu/~yzzhang/">Yunzhi Zhang</a><sup>2</sup>*<br>
-  <a href="https://cocosci.mit.edu/josh-tenenbaum/">Joshua B. Tenenbaum</a><sup>3</sup>,
-  <a href="https://jiajunwu.com/">Jiajun Wu</a><sup>2,+</sup>,
-  <a href="https://www.cs.jhu.edu/~ayuille1/">Alan Yuille</a><sup>1,+</sup>
-</p>
-
-<p align="center">
-  <sup>1</sup>Johns Hopkins University &nbsp;&nbsp;
-  <sup>2</sup>Stanford University &nbsp;&nbsp;
-  <sup>3</sup>Massachusetts Institute of Technology
-</p>
-
-<p align="center">* Core contributor.</p>
-
-<p align="center">
   <a href="https://arxiv.org/abs/2603.05591"><img src="https://img.shields.io/badge/ArXiv-2603.05591-b31b1b.svg" alt="ArXiv"></a>
   <a href="https://huggingface.co/qicq1c/SpatialCode"><img src="https://img.shields.io/badge/HuggingFace-Model-yellow" alt="Model"></a>
   <a href="https://huggingface.co/datasets/qicq1c/spatialencoder_full"><img src="https://img.shields.io/badge/HuggingFace-Training_Data-blue" alt="Training Data"></a>
@@ -46,6 +26,26 @@
   [arXiv:2603.05591](https://arxiv.org/abs/2603.05591).
 
 ## ✨ Overview
+
+<p align="center">
+  <a href="https://www.jienengchen.com/">Jieneng Chen</a><sup>1,2</sup>*,
+  <a href="https://qic999.github.io/">Qi Chen</a><sup>1</sup>*,
+  <a href="https://scholar.google.com/citations?hl=en&user=okLiptEAAAAJ">Ruisheng Yuan</a><sup>1</sup>*,
+  <a href="https://mwxinnn.github.io/about/">Wenxin Ma</a><sup>1</sup>*,
+  <a href="https://openreview.net/profile?id=~Chenlong_Wang3">Chenlong Wang</a><sup>1</sup>*,
+  <a href="https://cs.stanford.edu/~yzzhang/">Yunzhi Zhang</a><sup>2</sup>*<br>
+  <a href="https://cocosci.mit.edu/josh-tenenbaum/">Joshua B. Tenenbaum</a><sup>3</sup>,
+  <a href="https://jiajunwu.com/">Jiajun Wu</a><sup>2,+</sup>,
+  <a href="https://www.cs.jhu.edu/~ayuille1/">Alan Yuille</a><sup>1,+</sup>
+</p>
+
+<p align="center">
+  <sup>1</sup>Johns Hopkins University &nbsp;&nbsp;
+  <sup>2</sup>Stanford University &nbsp;&nbsp;
+  <sup>3</sup>Massachusetts Institute of Technology
+</p>
+
+<p align="center">* Core contributor.</p>
 
 **TL;DR:** We parse RGB videos into temporally coherent 3D spatial codes so LLMs
 can reason directly over explicit physical variables.
