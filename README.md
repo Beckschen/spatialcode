@@ -36,7 +36,16 @@
 
 [https://github.com/Beckschen/spatialcode/blob/main/figures/demo_compressed.mp4](https://github.com/user-attachments/assets/2386b070-b4df-46be-aea5-518e41294f0f)
 
-## 🐉 Abstract
+
+## 📣 News
+
+- **[2026.10]** SpatialCode v1.1: Qwen3-8B with spatial code + scene captions. Welcome our new core contributors [@qic999](https://github.com/qic999) and [@Lucky-Wang-Chenlong](https://github.com/Lucky-Wang-Chenlong)
+- **[2026.09]** SpatialCode v1 release: code, SpatialCode model, and preprocessed
+  training/evaluation data.
+- **[2026.03]** SpatialCode v1 arXiv paper released:
+  [arXiv:2603.05591](https://arxiv.org/abs/2603.05591).
+
+## ✨ Overview
 
 **TL;DR:** We parse RGB videos into temporally coherent 3D spatial codes so LLMs
 can reason directly over explicit physical variables.
@@ -56,16 +65,6 @@ finetune LLMs with reinforcement learning using a spatial rubric reward that
 encourages perspective-aware, geometrically grounded inference.
 
 </details>
-
-## 📣 News
-
-- **[2026.10]** SpatialCode v1.1: Qwen3-8B with spatial code + scene captions. Welcome our new core contributors [@qic999](https://github.com/qic999) and [@Lucky-Wang-Chenlong](https://github.com/Lucky-Wang-Chenlong)
-- **[2026.09]** SpatialCode v1 release: code, SpatialCode model, and preprocessed
-  training/evaluation data.
-- **[2026.03]** SpatialCode v1 arXiv paper released:
-  [arXiv:2603.05591](https://arxiv.org/abs/2603.05591).
-
-## ✨ Overview
 
 SpatialCode follows a modular design. A Spatial Encoder parses videos into
 scene-level 3D codes; the reasoning module consumes those codes with an LLM to
